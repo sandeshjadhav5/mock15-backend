@@ -1,6 +1,7 @@
 const express = require("express");
 const { connection } = require("./configs/db");
 const { userRouter } = require("./routes/User.routes");
+const { jobsRouter } = require("./routes/Jobs.routes");
 
 require("dotenv").config();
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRouter);
+app.use("/jobs", jobsRouter);
 
 app.listen(process.env.port, async () => {
   try {

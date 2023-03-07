@@ -44,6 +44,33 @@ userRouter.post("/signup", async (req, res) => {
 });
 
 // L O G I N
+userRouter.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await UserModel.find({ email });
+
+    if (user.length > 0) {
+      const hashed_Password = user[0].password;
+      const role = user[0].role;
+      bcrypt.compare(password, hashed_Password, (err, result) => {
+        if (result) {
+          const token = jwt.sign({ userID: user[0]._id }, "masai", {
+            expiresIn: "2h",
+          });
+          res.send({ msg: "Login Successfull", token: token, role: role });
+        } else {
+          res.send("Wrong Credentials");
+        }
+      });
+    } else {
+      res.send("Failed to Login");
+    }
+  } catch (err) {
+    res.send("Something Went Wrong");
+    console.log(err);
+  }
+});
 
 module.exports = {
   userRouter,
