@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const jobsSchema = mongoose.Schema({
   Company: String,
   Position: String,
-  Contract: Number,
+  Contract: String,
   Location: String,
 });
 
