@@ -1,5 +1,6 @@
 const express = require("express");
 const { connection } = require("./configs/db");
+const { userRouter } = require("./routes/User.routes");
 
 require("dotenv").config();
 
@@ -17,6 +18,8 @@ app.use(
 app.get("/", (req, res) => {
   res.send("Welcome to Masai Job App API");
 });
+
+app.use("/users", userRouter);
 
 app.listen(process.env.port, async () => {
   try {
